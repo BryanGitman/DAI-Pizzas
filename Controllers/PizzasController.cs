@@ -29,11 +29,11 @@ public class PizzasController : ControllerBase
         {
             if(id <= 0)
             {
-                respuesta = BadRequest(entity);
+                respuesta = BadRequest();
             }
             else
             {
-                respuesta = NotFound(entity);
+                respuesta = NotFound();
             }
         }
         else
@@ -51,15 +51,69 @@ public class PizzasController : ControllerBase
         return CreatedAtAction(nameof(Create), new { id = pizza.Id }, pizza);
     }
 
-    /*[HttpPut("{id}")]
+    [HttpPut("{id}")]
     public IActionResult Update(int id, Pizza pizza)
     {
-
+        IActionResult respuesta = null;
+        Pizza entity;
+        int intRowsAffected;
+        if(id != pizza.Id)
+        {
+            respuesta =  BadRequest();
+        }
+        else
+        {
+            entity = BD.GetById(id);
+            if(entity == null)
+            {
+                respuesta = NotFound();
+            }
+            else
+            {
+                intRowsAffected = BD.UpdateById(pizza);
+                if(intRowsAffected > 0)
+                {
+                    respuesta = Ok(pizza);
+                }
+                else
+                {
+                    respuesta = NotFound();
+                }
+            }
+        }
+        return respuesta;
     }
 
     [HttpDelete("{id}")]
     public IActionResult DeleteById(int id)
     {
-
-    }*/
+        IActionResult respuesta = null;
+        Pizza entity;
+        int intRowsAffected;
+        entity = BD.GetById(id);
+        if(entity == null)
+        {
+            if(id <= 0)
+            {
+                respuesta = BadRequest();
+            }
+            else
+            {
+                respuesta = NotFound();
+            }
+        }
+        else
+        {
+            intRowsAffected = BD.DeleteById(id);
+            if(intRowsAffected > 0)
+            {
+                respuesta = Ok(entity);
+            } 
+            else
+            {
+                respuesta = NotFound();
+            }
+        }
+        return respuesta;
+    }
 }
