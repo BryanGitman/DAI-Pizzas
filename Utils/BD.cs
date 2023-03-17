@@ -12,7 +12,7 @@ public static class BD
     private static string CONNECTION_STRING = @"Persist Security Info=False;User ID=Pizzas;password=Pizzas;Initial Catalog=DAI-Pizzas;Data Source=.;";
 
     public static List<Pizza> GetAll()
-    {
+    {          
         string sqlQuery;
         List<Pizza> returnList;
         returnList = new List<Pizza>();
